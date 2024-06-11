@@ -16,7 +16,8 @@ description: Try out Data API builder (DAB) using a sample application within a 
 
 # Try Out Development Containers: Data API builder & Azure SQL Database
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/microsoft/vscode-remote-try-dab/tree/main)
+[![Open in GitHub Codespaces](https://img.shields.io/static/v1?style=for-the-badge&label=GitHub+Codespaces&message=Open&color=brightgreen&logo=github)](https://codespaces.new/microsoft/vscode-remote-try-dab/tree/main)
+[![Open in Dev Container](https://img.shields.io/static/v1?style=for-the-badge&label=Dev+Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/microsoft/vscode-remote-try-dab/tree/main)
 
 A **development container** is a running [Docker](https://www.docker.com) container with a well-defined tool/runtime stack and its prerequisites. You can try out development containers with **[GitHub Codespaces](https://github.com/features/codespaces)** or **[Visual Studio Code Remote - Containers](https://aka.ms/vscode-remote/containers)**.
 
@@ -63,7 +64,7 @@ This template creates two containers, one for the Dev Container that includes .N
 
 The SQL container is deployed from the latest developer edition of Microsoft SQL 2022. The database(s) are made available directly in the Codespace/VS Code through the MSSQL extension with a connection labeled "LocalDev". The default `sa` user password is set using the .devcontainer/.env file. The default SQL port is mapped to port `1433` in `.devcontainer/docker-compose.yml`.
 
-Data API builder is a .NET Core application that provides a RESTful API for interacting with the database. This sample repository includes a preconfigured database, that is used by DAB to create the REST and GraphQL endpoints. Swagger UI offers a web-based UI that provides information about the REST endpoint, using the generated OpenAPI specification available at the default path: `http://localhost:8080/swagger/index.html`. Entities configured to be available via GraphQL are available at the default path: `http://localhost:8080/graphql`.
+Data API builder is a .NET Core application that provides a RESTful API for interacting with the database. This sample repository includes a preconfigured database, that is used by DAB to create the REST and GraphQL endpoints. Swagger UI offers a web-based UI that provides information about the REST endpoint, using the generated OpenAPI specification available at the default path: `http://localhost:5000/swagger/index.html`. Entities configured to be available via GraphQL are available at the default path: `http://localhost:5000/graphql`.
 
 If you wan to run some manual tests, you can use the  `dab_http_request.sh` file included in the `scripts`folder. This `sh` file includes multiple http request calls you can to understand how the Data API builder to interact with the database.
 
@@ -96,7 +97,11 @@ The `postCreateCommand.sh` script requires one argument: the path to the directo
 
 It utilizes the sqlpackage command-line utility to update the database schema using the .dacpac file, employing authentication credentials from the `.env` file situated in the `.devcontainer` directory.
 
-#### Start Data API Builder (DAB) engine
+#### Trust HTTPS certificate for Data API builder (DAB)
+
+As this Dev Container users .NET 8, you need to trust the .NET HTTPS certificate before starting the Data API builder engine. This task runs the command dotnet dev-certs https --trust.
+
+#### Start Data API builder (DAB) engine
 
 This task starts the DAB engine using the configuration file located at `dab/dab.config.json`. It executes the command `dab start --config=dab.config.json --no-https-redirect` within the dab directory of your workspace.
 

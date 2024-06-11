@@ -34,13 +34,26 @@
             ]
         },
         {
-            "label": "Run DAB",
+            "label": "Trust .NET HTTPS certificate for Data API builder",
+            "type": "shell",
+            "command": "dotnet dev-certs https --trust",
+            "options": {
+                "cwd": "${workspaceFolder}/dab"
+            }
+        },
+        {
+            "label": "Run Data API builder",
             "type": "shell",
             "command": "dab start --config=dab.config.json --no-https-redirect",
             "options": {
                 "cwd": "${workspaceFolder}/dab"
             }
+        },
+        {
+            "label": "Open Swagger UI",
+            "type": "shell",
+            "command": "xdg-open http://localhost:5000/swagger/index.html",
+            "problemMatcher": []
         }
-
     ]
 }
